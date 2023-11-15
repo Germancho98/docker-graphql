@@ -33,12 +33,16 @@ jobs:
         username: ${{ secrets.DOCKER_USER }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
-#    - name: Build Docker Image
-#      run: |
-#        docker build -t 98251998/docker-graphql:0.0.2 .
-#        docker build -t 98251998/docker-graphql:latest .
+    - name: Build Docker Image
+      env:
+        NEW_VERSION: ${{ steps.version.outputs.version }}
+      run: |
+        docker build -t 98251998/docker-graphql:$NEW_VERSION .
+        docker build -t 98251998/docker-graphql:latest .
 
-#    - name: Push Docker Image
-#      run: |
-#        docker push 98251998/docker-graphql:0.0.2
-#        docker push 98251998/docker-graphql:latest
+    - name: Push Docker Image
+      env:
+        NEW_VERSION: ${{ steps.version.outputs.version }}
+      run: |
+        docker push 98251998/docker-graphql:$NEW_VERSION
+        docker push 98251998/docker-graphql:latest
