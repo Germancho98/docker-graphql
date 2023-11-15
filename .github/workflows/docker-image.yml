@@ -23,6 +23,7 @@ jobs:
         DOKCER_USER: ${{ secrets.DOCKER_USER }}
         DOKCER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       run: |
+        echo "haciendo login"
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
 
     - name: Build Docker Image
