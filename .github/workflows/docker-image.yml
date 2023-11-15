@@ -7,24 +7,19 @@ on:
     branches: [ "main" ]
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
       with:
         fetch-depth: 0
-        
-    - name: Docker login
-      env:
+
+    - name: Login to Docker Hub
+      uses: docker/login-action@v1
+      with:
         username: ${{ secrets.DOCKER_USER }}
         password: ${{ secrets.DOCKER_PASSWORD }}
-      run: echo ${{ secrets.DOCKER_PASSWORD }} | 
-        echo "haciendo login"
-        docker login -u ${{ secrets.DOCKER_USER }} --password-stdin
 
     - name: Build Docker Image
       run: |
@@ -33,6 +28,3 @@ jobs:
     - name: Push Docker Image
       run: |
         docker push 98251998/docker-graphql:0.0.2
-    
-#    - name: Build the Docker image
-#      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
